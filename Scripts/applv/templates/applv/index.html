@@ -1,4 +1,4 @@
-{% load static %}
+  {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'applv/style.css' %}">
 {% if latest_question_list %}
@@ -10,3 +10,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<a href="http://127.0.0.1:8000/home/" class="btn btn-success">Volver al Inicio</a>

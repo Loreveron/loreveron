@@ -1,11 +1,15 @@
-from django.http import HttpResponse
+from django.shortcuts import render,get_object_or_404
+
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.views import generic
-from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Question
 
+from .models import Question,Choice
+
+# Create your views here.
 
 class IndexView(generic.ListView):
     template_name = 'applv/index.html'
@@ -13,7 +17,11 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.all()
+
+class HomeView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'applv/home.html'
+    login_url = '/admin'
 
 
 class DetailView(generic.DetailView):
@@ -23,7 +31,7 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = 'applvz/results.html'
+    template_name = 'applv/results.html'
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
